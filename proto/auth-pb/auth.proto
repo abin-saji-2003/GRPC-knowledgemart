@@ -14,6 +14,7 @@ service AuthService {
   rpc AdminLogin (AdminLoginRequest) returns (AdminLoginResponse);
 }
 
+// Signup Request & Response
 message EmailSignupRequest {
   string name = 1;
   string email = 2;
@@ -27,6 +28,7 @@ message EmailSignupResponse {
   bool success = 2;
 }
 
+// Login Request & Response
 message EmailLoginRequest {
   string email = 1;
   string password = 2;
@@ -35,8 +37,10 @@ message EmailLoginRequest {
 message EmailLoginResponse {
   string token = 1;
   bool success = 2;
+  UserResponse user = 3; // ✅ User details after login
 }
 
+// Verify Email
 message VerifyEmailRequest {
   string email = 1;
   uint64 otp = 2;
@@ -47,6 +51,7 @@ message VerifyEmailResponse {
   bool success = 2;
 }
 
+// Resend OTP
 message ResendOTPRequest {
   string email = 1;
 }
@@ -56,6 +61,7 @@ message ResendOTPResponse {
   bool success = 2;
 }
 
+// Seller Register
 message SellerRegisterRequest {
   string name = 1;
   string password = 2;
@@ -67,6 +73,7 @@ message SellerRegisterResponse {
   bool success = 2;
 }
 
+// Seller Login
 message SellerLoginRequest {
   uint32 user_id = 1;
   string username = 2;
@@ -76,8 +83,10 @@ message SellerLoginRequest {
 message SellerLoginResponse {
   string token = 1;
   bool success = 2;
+  SellerResponse seller = 3; // ✅ Seller details after login
 }
 
+// Admin Login
 message AdminLoginRequest {
   string email = 1;
   string password = 2;
@@ -86,4 +95,28 @@ message AdminLoginRequest {
 message AdminLoginResponse {
   string token = 1;
   bool success = 2;
+}
+
+// User Response (Only for login)
+message UserResponse {
+  uint32 id = 1;
+  string name = 2;
+  string email = 3;
+  string phone_number = 4;
+  string picture = 5;
+  bool blocked = 6;
+  bool verified = 7;
+}
+
+// Seller Response (Only for login)
+message SellerResponse {
+  uint32 id = 1;
+  uint32 userid = 2;
+  string user = 3;
+  string email = 4;
+  string name = 5;
+  string phone_number = 6;
+  string description = 7;
+  bool verified = 8;
+  double sellerRating = 9;
 }
