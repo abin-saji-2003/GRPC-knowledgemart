@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "proto/auth-pb";
+
+service AuthService {
+  rpc EmailSignup (EmailSignupRequest) returns (EmailSignupResponse);
+  rpc EmailLogin (EmailLoginRequest) returns (EmailLoginResponse);
+  rpc VerifyEmail (VerifyEmailRequest) returns (VerifyEmailResponse);
+  rpc ResendOTP (ResendOTPRequest) returns (ResendOTPResponse);
+  rpc SellerRegister (SellerRegisterRequest) returns (SellerRegisterResponse);
+  rpc SellerLogin (SellerLoginRequest) returns (SellerLoginResponse);
+  rpc AdminLogin (AdminLoginRequest) returns (AdminLoginResponse);
+}
+
+message EmailSignupRequest {
+  string name = 1;
+  string email = 2;
+  string phone_number = 3;
+  string password = 4;
+  string confirm_password = 5;
+}
+
+message EmailSignupResponse {
+  string message = 1;
+  bool success = 2;
+}
+
+message EmailLoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message EmailLoginResponse {
+  string token = 1;
+  bool success = 2;
+}
+
+message VerifyEmailRequest {
+  string email = 1;
+  uint64 otp = 2;
+}
+
+message VerifyEmailResponse {
+  string message = 1;
+  bool success = 2;
+}
+
+message ResendOTPRequest {
+  string email = 1;
+}
+
+message ResendOTPResponse {
+  string message = 1;
+  bool success = 2;
+}
+
+message SellerRegisterRequest {
+  string name = 1;
+  string password = 2;
+  string description = 3;
+}
+
+message SellerRegisterResponse {
+  string message = 1;
+  bool success = 2;
+}
+
+message SellerLoginRequest {
+  uint32 user_id = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message SellerLoginResponse {
+  string token = 1;
+  bool success = 2;
+}
+
+message AdminLoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AdminLoginResponse {
+  string token = 1;
+  bool success = 2;
+}
