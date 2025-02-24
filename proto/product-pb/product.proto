@@ -16,7 +16,7 @@ message AddProductRequest {
   string description = 3;
   float price = 4;
   float offer_amount = 5;
-  string image = 6;
+  string image_url = 6;
   uint32 seller_id = 7;
 }
 
@@ -26,7 +26,7 @@ message EditProductRequest {
   optional string description = 3;
   optional float price = 4;
   optional float offer_amount = 5;
-  optional string image = 6;
+  optional string image_url = 6;
   optional bool availability = 7;
   optional uint32 category_id = 8;
   uint32 seller_id = 9;
@@ -51,12 +51,9 @@ message DeleteProductResponse {
 message Product {
   uint32 id = 1;
   string name = 2;
-  uint32 category_id = 3;
-  uint32 seller_id = 4;
-  string description = 5;
-  float price = 6;
-  float offer_amount = 7;
-  float final_amount = 8;
-  string image = 9;
-  bool availability = 10;
+  string description = 3;
+  bool availability = 4;
+  float price = 5;
+  float offer_amount = 6;
+  string image_url = 7;
 }
