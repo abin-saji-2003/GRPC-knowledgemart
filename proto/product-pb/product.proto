@@ -8,7 +8,10 @@ service ProductService {
   rpc AddProduct(AddProductRequest) returns (ProductResponse);
   rpc EditProduct(EditProductRequest) returns (ProductResponse);
   rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
+  rpc GetAllProducts(Empty) returns (ProductsResponse); // ✅ Added GetAllProducts
 }
+
+message Empty {} // ✅ Added Empty message for GetAllProducts
 
 message AddProductRequest {
   uint32 category_id = 1;
@@ -41,6 +44,12 @@ message ProductResponse {
   string status = 1;
   string message = 2;
   Product data = 3;
+}
+
+message ProductsResponse { // ✅ Added response for multiple products
+  string status = 1;
+  string message = 2;
+  repeated Product products = 3;
 }
 
 message DeleteProductResponse {
