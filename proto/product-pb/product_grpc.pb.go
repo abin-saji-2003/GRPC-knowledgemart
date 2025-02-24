@@ -23,6 +23,7 @@ const (
 	ProductService_EditProduct_FullMethodName    = "/product.ProductService/EditProduct"
 	ProductService_DeleteProduct_FullMethodName  = "/product.ProductService/DeleteProduct"
 	ProductService_GetAllProducts_FullMethodName = "/product.ProductService/GetAllProducts"
+	ProductService_GetProductById_FullMethodName = "/product.ProductService/GetProductById"
 )
 
 // ProductServiceClient is the client API for ProductService service.
@@ -33,6 +34,7 @@ type ProductServiceClient interface {
 	EditProduct(ctx context.Context, in *EditProductRequest, opts ...grpc.CallOption) (*ProductResponse, error)
 	DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*DeleteProductResponse, error)
 	GetAllProducts(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ProductsResponse, error)
+	GetProductById(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*ProductResponse, error)
 }
 
 type productServiceClient struct {
@@ -83,6 +85,16 @@ func (c *productServiceClient) GetAllProducts(ctx context.Context, in *Empty, op
 	return out, nil
 }
 
+func (c *productServiceClient) GetProductById(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*ProductResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProductResponse)
+	err := c.cc.Invoke(ctx, ProductService_GetProductById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServiceServer is the server API for ProductService service.
 // All implementations must embed UnimplementedProductServiceServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type ProductServiceServer interface {
 	EditProduct(context.Context, *EditProductRequest) (*ProductResponse, error)
 	DeleteProduct(context.Context, *DeleteProductRequest) (*DeleteProductResponse, error)
 	GetAllProducts(context.Context, *Empty) (*ProductsResponse, error)
+	GetProductById(context.Context, *GetProductRequest) (*ProductResponse, error)
 	mustEmbedUnimplementedProductServiceServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedProductServiceServer) DeleteProduct(context.Context, *DeleteP
 }
 func (UnimplementedProductServiceServer) GetAllProducts(context.Context, *Empty) (*ProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllProducts not implemented")
+}
+func (UnimplementedProductServiceServer) GetProductById(context.Context, *GetProductRequest) (*ProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductById not implemented")
 }
 func (UnimplementedProductServiceServer) mustEmbedUnimplementedProductServiceServer() {}
 func (UnimplementedProductServiceServer) testEmbeddedByValue()                        {}
@@ -206,6 +222,24 @@ func _ProductService_GetAllProducts_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductService_GetProductById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServiceServer).GetProductById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductService_GetProductById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServiceServer).GetProductById(ctx, req.(*GetProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ProductService_ServiceDesc is the grpc.ServiceDesc for ProductService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllProducts",
 			Handler:    _ProductService_GetAllProducts_Handler,
+		},
+		{
+			MethodName: "GetProductById",
+			Handler:    _ProductService_GetProductById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

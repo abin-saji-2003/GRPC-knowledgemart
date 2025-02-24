@@ -9,6 +9,7 @@ service ProductService {
   rpc EditProduct(EditProductRequest) returns (ProductResponse);
   rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
   rpc GetAllProducts(Empty) returns (ProductsResponse); // ✅ Added GetAllProducts
+  rpc GetProductById(GetProductRequest) returns (ProductResponse); // ✅ Added GetProductById
 }
 
 message Empty {} // ✅ Added Empty message for GetAllProducts
@@ -38,6 +39,10 @@ message EditProductRequest {
 message DeleteProductRequest {
   uint32 product_id = 1;
   uint32 seller_id = 2;
+}
+
+message GetProductRequest { // ✅ Added request for fetching product by ID
+  uint32 product_id = 1;
 }
 
 message ProductResponse {
