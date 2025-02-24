@@ -12,6 +12,7 @@ service AuthService {
   rpc SellerRegister (SellerRegisterRequest) returns (SellerRegisterResponse);
   rpc SellerLogin (SellerLoginRequest) returns (SellerLoginResponse);
   rpc AdminLogin (AdminLoginRequest) returns (AdminLoginResponse);
+  rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenResponse); // ✅ Added for JWT authentication
 }
 
 // Signup Request & Response
@@ -35,7 +36,7 @@ message EmailLoginRequest {
 }
 
 message EmailLoginResponse {
-  string token = 1;
+  string token = 1; // ✅ JWT Token after successful login
   bool success = 2;
   UserResponse user = 3; // ✅ User details after login
 }
@@ -81,7 +82,7 @@ message SellerLoginRequest {
 }
 
 message SellerLoginResponse {
-  string token = 1;
+  string token = 1; // ✅ JWT Token after successful seller login
   bool success = 2;
   SellerResponse seller = 3; // ✅ Seller details after login
 }
@@ -93,8 +94,19 @@ message AdminLoginRequest {
 }
 
 message AdminLoginResponse {
-  string token = 1;
+  string token = 1; // ✅ JWT Token after successful admin login
   bool success = 2;
+}
+
+// ✅ JWT Token Validation
+message ValidateTokenRequest {
+  string token = 1; // Token to be validated
+}
+
+message ValidateTokenResponse {
+  bool valid = 1;    // True if token is valid, false otherwise
+  string user_id = 2; // Extracted User ID from token
+  string role = 3;    // Extracted Role from token (e.g., "user", "seller", "admin")
 }
 
 // User Response (Only for login)
