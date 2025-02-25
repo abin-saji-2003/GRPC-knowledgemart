@@ -48,4 +48,5 @@ message CartProduct {
   float offer_amount = 5;
   string image_url = 6;
   bool availability = 7;
+  uint32 seller_id = 8;
 }
