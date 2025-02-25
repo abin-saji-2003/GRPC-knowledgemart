@@ -70,4 +70,5 @@ message Product {
   float price = 5;
   float offer_amount = 6;
   string image_url = 7;
+  uint32 seller_id=8;
 }
