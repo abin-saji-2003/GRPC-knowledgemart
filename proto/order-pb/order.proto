@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "proto/order-pb";
+
+import "google/protobuf/timestamp.proto";
+
+// Order Service Definition
+service OrderService {
+    rpc PlaceOrder(PlaceOrderRequest) returns (PlaceOrderResponse);
+    rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse);
+    rpc GetOrderById(GetOrderByIdRequest) returns (GetOrderByIdResponse);
+    rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
+}
+
+// Order Model
+message Order {
+    uint32 id = 1;
+    uint32 user_id = 2;
+    repeated OrderItem items = 3;
+    float total_price = 4;
+    string status = 5; // e.g., "Pending", "Completed", "Cancelled"
+    google.protobuf.Timestamp created_at = 6;
+}
+
+// Order Item Model
+message OrderItem {
+    uint32 product_id = 1;
+    string name = 2;
+    float price = 3;
+    uint32 quantity = 4;
+}
+
+// Request & Response Messages
+
+// Place Order
+message PlaceOrderRequest {
+    uint32 user_id = 1;
+}
+
+message PlaceOrderResponse {
+    string status = 1;
+    string message = 2;
+    Order order = 3;
+}
+
+// Get Orders for a User
+message GetOrdersRequest {
+    uint32 user_id = 1;
+}
+
+message GetOrdersResponse {
+    string status = 1;
+    string message = 2;
+    repeated Order orders = 3;
+}
+
+// Get Order by ID
+message GetOrderByIdRequest {
+    uint32 order_id = 1;
+}
+
+message GetOrderByIdResponse {
+    string status = 1;
+    string message = 2;
+    Order order = 3;
+}
+
+// Cancel Order
+message CancelOrderRequest {
+    uint32 order_id = 1;
+}
+
+message CancelOrderResponse {
+    string status = 1;
+    string message = 2;
+}
