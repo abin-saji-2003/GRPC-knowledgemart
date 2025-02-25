@@ -20,21 +20,26 @@ message Order {
     uint32 user_id = 2;
     repeated OrderItem items = 3;
     float total_price = 4;
-    float final_amount = 5;  // ✅ Added FinalAmount
-    string payment_method = 6;  // ✅ Added PaymentMethod (e.g., "COD")
-    string payment_status = 7;  // ✅ Added PaymentStatus (e.g., "Pending")
-    google.protobuf.Timestamp ordered_at = 8;  // ✅ Added OrderedAt
-    string status = 9; // e.g., "Pending", "Completed", "Cancelled"
-    float delivery_charge = 10;  // ✅ Added DeliveryCharge
+    float final_amount = 5;
+    string payment_method = 6;
+    string payment_status = 7;
+    google.protobuf.Timestamp ordered_at = 8;
+    uint32 seller_id = 9;  // ✅ Added SellerID
+    string status = 10;
+    float delivery_charge = 11;
 }
 
 // Order Item Model
 message OrderItem {
-    uint32 order_id = 1;  // ✅ Added OrderID to track which order this item belongs to
+    uint32 order_id = 1;
     uint32 product_id = 2;
-    float price = 3;
-    float final_amount = 4;  // ✅ Added FinalAmount per item
-    string status = 5;  // ✅ Added Status (e.g., "confirmed")
+    uint32 seller_id = 3;  // ✅ Added SellerID
+    string name = 4;  // ✅ Added Product Name
+    string description = 5;  // ✅ Added Product Description
+    float price = 6;
+    float final_amount = 7;
+    string status = 8;
+    string image_url = 9;  // ✅ Added Image URL
 }
 
 // Request & Response Messages
