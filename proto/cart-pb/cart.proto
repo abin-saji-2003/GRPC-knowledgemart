@@ -8,6 +8,7 @@ service CartService {
   rpc AddToCart(AddToCartRequest) returns (CartResponse);
   rpc RemoveFromCart(RemoveFromCartRequest) returns (CartResponse);
   rpc GetProductsFromCart(GetProductsFromCartRequest) returns (GetProductsFromCartResponse);
+  rpc ClearCart(ClearCartRequest) returns (CartResponse); // Added ClearCart RPC
 }
 
 message AddToCartRequest {
@@ -21,6 +22,10 @@ message RemoveFromCartRequest {
 }
 
 message GetProductsFromCartRequest {
+  uint32 user_id = 1;
+}
+
+message ClearCartRequest { // Added ClearCartRequest message
   uint32 user_id = 1;
 }
 
